@@ -6,6 +6,8 @@ This is a custom user module I created add a loading Bar to your UCI in QSYS Des
 
 This can also act as a System Start/End Module.
 
+VIDEO DOC ---> https://youtu.be/vn5rmMObG1w
+
 This is Rev1 of this module. May add additional features in the future.
 
 MAKE SURE TO LEAVE CREDIT INSIDE THE CODE.
