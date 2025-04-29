@@ -1,4 +1,5 @@
-NOTES
+REV 2 COMING SOON!
+
 
 ------ About ------
 
