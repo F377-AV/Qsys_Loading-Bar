@@ -1,0 +1,400 @@
+--[[------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                            LOADING-BAR
+                                                            -----------
+                                                            ----------
+                                                            ---------
+                                                            --------
+                                                            -------
+                                                            ------
+                                                            -----
+                                                            ----
+                                                            ---
+                                                            --
+                                                            -
+                                                    THIS CODE HAS BEEN CREATED BY                                                                       
+                                                          JASON MARTINEZ                                          
+
+                                                        _________    __    __
+                                                        |__   __|   /  \  /  \
+                                                       __  |  |    /    \/    \ 
+                                                      |  |_|  |   /  /\    /\  \
+                                                      |_______|  /__/  \__/  \__\
+--]]-------------------------------------------------------------------------------------------------------------------------------------------------------
+SystemStartEnd = Component.New('System-Start-End')
+PercentRouter = Component.New('Percent_Router')
+
+Empty = 0
+Full = 100
+Delay0 = .1
+Delay1 = .3
+Delay2 = 3
+Delay3 = 3.2
+Delay4 = .5
+Delay5 = 1.2
+Delay7 = 1.5
+Delay8 = .7
+Delay9 = .8
+RampInstant = 0
+clrEndColor = Controls.EndColorBucket.Color
+strEndColor = Controls.EndColorBucket.String
+clrStartColor = Controls.StartColorBucket.Color
+strStartColor = Controls.StartColorBucket.String
+
+tblOfColors =
+{
+"Olive",
+"Violet",
+"Red",
+"Crimson",
+"FireBrick",
+"DarkRed",
+"Salmon",
+"LightSalmon",
+"DarkSalmon",
+"IndianRed",
+"Orange",
+"DarkOrange",
+"Tomato",
+"OrangeRed",
+"Yellow",
+"LightYellow",
+"Gold",
+"Khaki",
+"LemonChiffon",
+"Green",
+"ForestGreen",
+"DarkOliveGreen",
+"DarkSeaGreen",
+"Lime",
+"LimeGreen",
+"SpringGreen",
+"Chartreuse",
+"GreenYellow",
+"Aqua",
+"LightCyan",
+"Aquamarine",
+"Turquoise",
+"Cyan",
+"DarkCyan",
+"Blue",
+"MediumBlue",
+"DeepSkyBlue",
+"SkyBlue",
+"RoyalBlue",
+"MidnightBlue",
+"PowderBlue",
+"CadetBlue",
+"Purple",
+"MediumPurple",
+"Plum",
+"Fuchsia",
+"Magenta",
+"Lavender",
+"DarkMagenta",
+"DarkViolet",
+"Indigo",
+"Pink",
+"HotPink",
+"LightPink",
+"DeepPink",
+"White",
+"Snow",
+"HoneyDew",
+"Ivory",
+"Gray",
+"LightGray",
+"Silver",
+"DarkGray",
+"SlateGrey",
+"Brown",
+"Maroon",
+"SaddleBrown",
+"Chocolate",
+"Sienna",
+"Tan",
+"Wheat",
+"CornSilk",
+"RosyBrown",
+}
+
+function funcInit()
+  Controls.indPercent.String = "0%"
+  Controls.SystemEnd.IsDisabled = false
+  Controls.knbSystemBothMeter.Value = 0 
+  Controls.indPercentNormal.String = "0%"
+  Controls.SystemStart.IsDisabled = false 
+  Controls.indPercentReverse.String = "100%"
+  Controls.btnBarColorChange.Boolean = false
+  Controls.knbFixedLoadingPercent.Value = 100
+  Controls.knbFixedLoadingPercentReverse.Value = 0
+  PercentRouter['output.1.input.1.select'].Boolean = true
+  PercentRouter['output.2.input.1.select'].Boolean = true
+  PercentRouter['output.3.input.2.select'].Boolean = true
+  Controls.indSystemStatus.String = "Please Press System Start Or End"
+  Timer.CallAfter(function() Controls.indDebugWindow.String = "Welcome, my son " ..  "\n Welcome to the Machine..." end, Delay8)
+end
+
+function funcUpdateLegends()
+  EndTime =  Controls.knbEndTime.Value
+  StartTime = Controls.knbStartTime.Value
+  Controls.EndColor.Choices = tblOfColors
+  Controls.StartColor.Choices = tblOfColors
+  Controls.SharedColor.Choices = tblOfColors
+  Controls.EndColorBucket.Color = Controls.EndColor.Color 
+  Controls.EndColorBucket.String = Controls.EndColor.String
+  Controls.StartColorBucket.Color = Controls.StartColor.Color
+  Controls.StartColorBucket.String = Controls.StartColor.String 
+  Controls.SharedColorBucket.Color = Controls.SharedColor.Color 
+  Controls.SharedColorBucket.String = Controls.SharedColor.String
+end 
+
+function funcDebugger(argWho, argWhy)
+  print(argWho .. argWhy)
+  Controls.indDebugWindow.String = argWho .. argWhy
+end 
+
+function funcSetLoadingBarToZero()
+  Controls.knbLoadingPercent.Value = Empty
+  Controls.knbLoadingPercentReverse.Value = Full
+  Controls.knbLoadingPercent.RampTime = RampInstant
+  Controls.knbLoadingPercentReverse.RampTime = RampInstant
+end 
+
+function funcRampToFullStart()
+  Controls.knbSystemBothMeter.Value = Empty
+  Controls.knbLoadingPercent.RampTime = StartTime
+  Controls.knbSystemBothMeter.RampTime = StartTime
+  Controls.knbLoadingPercentReverse.RampTime = StartTime
+  Controls.knbLoadingPercent.Value = Controls.knbFixedLoadingPercent.Value
+  Controls.knbSystemBothMeter.Value = Controls.knbFixedLoadingPercent.Value
+  Controls.knbLoadingPercentReverse.Value = Controls.knbFixedLoadingPercentReverse.Value
+end 
+
+function funcRampToFullEnd()
+  Controls.knbSystemBothMeter.Value = Full
+  Controls.knbLoadingPercent.RampTime = EndTime
+  Controls.knbSystemBothMeter.RampTime = EndTime
+  Controls.knbLoadingPercentReverse.RampTime = EndTime
+  Controls.knbLoadingPercent.Value = Controls.knbFixedLoadingPercent.Value
+  Controls.knbSystemBothMeter.Value = Controls.knbFixedLoadingPercentReverse.Value 
+  Controls.knbLoadingPercentReverse.Value = Controls.knbFixedLoadingPercentReverse.Value
+end 
+
+function funcSetPercentToZero()
+  Controls.knbSystemBothMeter.Value = Empty
+  Controls.knbSystemBothMeter.RampTime = RampInstant
+  PercentRouter['output.1.input.1.select'].Boolean = true
+end 
+
+function funcSetPercentToFull()
+  Controls.knbSystemBothMeter.Value = Full
+  Controls.knbSystemBothMeter.RampTime = RampInstant
+  PercentRouter['output.1.input.2.select'].Boolean = true
+end 
+
+function funcLockButtons(argBoolean)
+  Controls.SystemEnd.IsDisabled = (argBoolean)
+  Controls.SystemStart.IsDisabled = (argBoolean)
+end
+
+function funcSystemButtonsOn(argBoolean)
+  local OppargBoolean = argBoolean
+    if argBoolean == true then 
+      OppargBoolean = false 
+    elseif argBoolean == false then
+      OppargBoolean = true
+    end 
+  Controls.SystemEnd.Boolean = OppargBoolean 
+  Controls.SystemStart.Boolean = (argBoolean) 
+end 
+
+function funcControlRouter(argBoolean)
+  local OppargBoolean = argBoolean
+    if argBoolean == true then 
+      OppargBoolean = false 
+    elseif argBoolean == false then
+      OppargBoolean = true
+    end 
+  PercentRouter['output.1.input.1.select'].Boolean = (argBoolean)
+  PercentRouter['output.1.input.2.select'].Boolean = OppargBoolean
+end 
+
+function funcSetSharedColor(argColor)
+  local strColor = (argColor)
+    Controls.SharedColor.Color = tostring(strColor)
+    Controls.SharedColorBucket.Color = tostring(strColor)
+    Controls.knbSystemBothMeter.Color = tostring(strColor)
+    funcDebugger("Shared Meter Color is set to ", Controls.SharedColorBucket.Color)
+end 
+
+function funcSetStartColor(argColor)
+  local strColor = (argColor)
+    Controls.StartColor.Color = tostring(strColor)
+    Controls.SystemStart.Color = tostring(strColor)
+    Controls.knbStartTime.Color = tostring(strColor)
+    Controls.StartColorBucket.Color = tostring(strColor)
+    Controls.knbLoadingPercent.Color = tostring(strColor)
+    Controls.SystemLoadingStart.Color =  tostring(strColor)
+end 
+
+function funcSetEndColor(argColor)
+  local strColor = (argColor)
+    Controls.EndColor.Color = tostring(strColor)
+    Controls.EndColor.Color = tostring(strColor)
+    Controls.SystemEnd.Color = tostring(strColor)
+    Controls.knbEndTime.Color = tostring(strColor)
+    Controls.EndColorBucket.Color = tostring(strColor) 
+    Controls.SystemLoadingEnd.Color = tostring(strColor)
+    Controls.knbLoadingPercentReverse.Color = tostring(strColor)
+    Timer.CallAfter(function() funcDebugger("End Color is set to ", tostring(strColor)) end, Delay1)
+end 
+
+function funcCheckSharedColor()
+    if Controls.SystemStart.Boolean == true
+  and Controls.btnBarColorChange.Boolean == true
+  and Controls.SystemEnd.Boolean == false  then
+    Controls.knbSystemBothMeter.Color = Controls.StartColor.Color
+    Timer.CallAfter(function() funcDebugger("Start & Shared Meter Color is set to ", Controls.StartColor.String) end, Delay1)
+    Timer.CallAfter(function() funcDebugger("Start & Shared Meter Color is set to ", Controls.StartColor.String) end, Delay5)
+  elseif Controls.SystemEnd.Boolean == true
+  and Controls.btnBarColorChange.Boolean == true 
+  and Controls.SystemStart.Boolean == false then
+    Controls.knbSystemBothMeter.Color = Controls.EndColor.Color
+    Timer.CallAfter(function() funcDebugger("End & Shared Meter Color is set to ", Controls.EndColor.String) end, Delay1)
+    Timer.CallAfter(function() funcDebugger("End & Shared Meter Color is set to ", Controls.EndColor.String) end, Delay5)
+  else
+    Controls.knbSystemBothMeter.Color = Controls.SharedColorBucket.Color
+    Timer.CallAfter(function() funcDebugger("Shared Meter Color is set to ", Controls.SharedColorBucket.String) end, Delay1)
+  end 
+end 
+
+function funcLEDStartControl(argBoolean)
+  Controls.SystemLoadingStart.Boolean = (argBoolean)
+end
+
+function funcLEDEndControl(argBoolean)
+  Controls.SystemLoadingEnd.Boolean = (argBoolean)
+end
+
+function funcSystemStatus(argString)
+  Controls.indSystemStatus.String = "System is Currently " .. argString
+end 
+
+Controls.SystemStart.EventHandler = function()
+  funcUpdateLegends()
+  funcSetLoadingBarToZero()
+  funcLockButtons(true)
+  funcControlRouter(true)
+  funcLEDStartControl(true)
+  funcSystemButtonsOn(true)
+  funcSystemStatus("WARMING UP")
+  Timer.CallAfter(funcCheckSharedColor, Delay0)
+  Timer.CallAfter(funcRampToFullStart, Delay1)
+  Timer.CallAfter(funcSetPercentToFull, StartTime + Delay4)
+  Timer.CallAfter(funcSetLoadingBarToZero, StartTime + Delay9)
+  Timer.CallAfter(function() funcSystemStatus("ON") end, StartTime)
+  Timer.CallAfter(function() funcLockButtons(false) end, StartTime + Delay4)
+  Timer.CallAfter(function() funcLEDStartControl(false) end, StartTime + Delay4)
+  Timer.CallAfter(function() funcDebugger("System ", "Is Starting") end, Delay7)
+  Timer.CallAfter(function() funcDebugger("System", " has Started") end, StartTime + Delay4)
+end
+
+Controls.SystemEnd.EventHandler = function()
+  funcUpdateLegends()
+  funcSetLoadingBarToZero()
+  funcLockButtons(true)
+  funcControlRouter(false)
+  funcLEDEndControl(true)
+  funcSystemButtonsOn(false)
+  funcSystemStatus("COOLING DOWN")
+  funcDebugger("System", " is Ending")
+  Timer.CallAfter(funcCheckSharedColor, Delay0)
+  Timer.CallAfter(funcRampToFullEnd, Delay1)
+  Timer.CallAfter(funcSetPercentToZero, EndTime + Delay4)
+  Timer.CallAfter(funcSetLoadingBarToZero, EndTime + Delay9)
+  Timer.CallAfter(function() funcSystemStatus("OFF") end, EndTime)
+  Timer.CallAfter(function() funcLockButtons(false) end, EndTime + Delay2)
+  Timer.CallAfter(function() funcLEDEndControl(false) end, EndTime + Delay4)
+  Timer.CallAfter(function() funcDebugger("System ", "Is Ending") end, Delay7)
+  Timer.CallAfter(function() funcDebugger("System", " has Ended") end, EndTime + Delay4)
+end
+
+Controls.StartColor.EventHandler = function(ctl)
+  Controls.StartColorBucket.String = ctl.String
+  local strColor = ctl.String
+  funcUpdateLegends()
+  funcCheckSharedColor()
+  funcSetStartColor(strColor)
+  Timer.CallAfter(funcCheckSharedColor, Delay0)
+  Timer.CallAfter(function() funcDebugger("Start Color is set to ", ctl.String) end, Delay5 + Delay1)
+    if Controls.btnBarColorChange.Boolean == true and ctl.Boolean == true then
+      Timer.CallAfter(function() funcDebugger("Start & Shared Meter Color is set to ", tostring(strColor)) end, Delay7 + Delay9) 
+    elseif Controls.btnBarColorChange.Boolean == false and ctl.Boolean == true then
+      Timer.CallAfter(function() funcDebugger("Start Color is set to ", tostring(strColor)) end, Delay7 + Delay8)
+    end 
+end
+
+Controls.EndColor.EventHandler = function(ctl)
+  Controls.EndColorBucket.String = ctl.String
+  local strColor = ctl.String
+  funcUpdateLegends()
+  funcSetEndColor(strColor)
+  Timer.CallAfter(funcCheckSharedColor, Delay0)
+  Timer.CallAfter(function() funcDebugger("End Color is set to ", ctl.String) end, Delay5 + Delay1)
+  if Controls.btnBarColorChange.Boolean == true  then
+      Timer.CallAfter(function() funcDebugger("End & Shared Meter Color is set to ", tostring(strColor)) end, Delay7 + Delay9) 
+    elseif Controls.btnBarColorChange.Boolean == false  then 
+      Timer.CallAfter(function() funcDebugger("End Color is set to ", tostring(strColor)) end, Delay7 + Delay8)
+    end 
+end
+
+Controls.SharedColor.EventHandler = function(ctl)
+  Controls.SharedColorBucket.String = ctl.String
+  local strColor = ctl.String
+  funcUpdateLegends()
+  funcSetSharedColor(strColor)
+  Timer.CallAfter(funcCheckSharedColor, Delay0)
+end 
+
+Controls.btnBarColorChange.EventHandler = function(ctl)
+  Timer.CallAfter(funcCheckSharedColor, Delay0)
+    if ctl.Boolean then 
+        Timer.CallAfter(function() funcDebugger("User", " Turned On Color Sync") end, Delay5 + Delay1)
+    else 
+        Timer.CallAfter(function() funcDebugger("User", " Turned Off Color Sync") end, Delay5 + Delay1)
+    end
+end 
+
+Controls.btnEnableButtons.EventHandler = function()
+  funcLockButtons(false)
+  Timer.CallAfter(function() funcDebugger("User", " Pressed Enable Button") end, Delay5)
+end 
+
+Controls.btnCodeReset.EventHandler = function()
+  SystemStartEnd['reload']:Trigger()
+  Timer.CallAfter(function() funcDebugger("User", " Pressed Script Restart") end, Delay5)
+end 
+
+Controls.indPercentRX.EventHandler=function(ctl)
+  str = ctl.String
+  Controls.indPercent.String = str .. '%'
+end 
+
+Controls.indPercentNormal.EventHandler = function(ctl)
+  str = ctl.String
+  Controls.indPercentNormal.String = str .. '%'
+end
+
+Controls.indPercentReverse.EventHandler = function(ctl)
+  str = ctl.String
+  Controls.indPercentReverse.String = str .. '%'
+end
+
+Controls.knbEndTime.EventHandler = funcUpdateLegends
+Controls.knbStartTime.EventHandler = funcUpdateLegends
+
+funcInit()
+funcUpdateLegends()
+funcSetEndColor(Controls.EndColorBucket.String)
+funcSetStartColor(Controls.StartColorBucket.String)
+funcSetSharedColor(Controls.SharedColorBucket.String)
