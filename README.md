@@ -1,5 +1,15 @@
-REV 2 COMING SOON!
+REV 2 Out NOW!
 
+I stuck a couple of Easter Eggs in here too 😀
+You may notice two colors out of place at the top, my kiddos names are Oliver and Violet and they're gold to me ❤️ 
+The 2nd is a Pink Floyd Reference 
+
+-----ADDED-----
+Color Selector For all three bars
+2X Debug Windows
+Unlocked Code
+
+CONTACT ME IF YOU HAVE QUESTIONS!
 
 ------ About ------
 
