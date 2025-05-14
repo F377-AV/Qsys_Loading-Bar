@@ -1,6 +1,10 @@
-REV 2 Out NOW!
+REV 3 COMING SOON!
 
-I stuck a couple of Easter Eggs in here too 😀
+
+---------------------------------------------------------------------------------------------------------------------
+REV 2
+
+I stuck a couple of Easter Eggs in here
 You may notice two colors out of place at the top, my kiddos names are Oliver and Violet and they're gold to me ❤️ 
 The 2nd is a Pink Floyd Reference 
 
